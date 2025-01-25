@@ -11,7 +11,7 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
-const companyRouter = require('./routes/company');
+const companyRouter = require('./routes/register-company');
 
 mongoose.connect(process.env.MONGODBURI)
   .then(() => console.log('Connected to MongoDB'))
