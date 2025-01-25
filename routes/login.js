@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require('../schemas/user');
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
     const { username, password } = req.body;
   
     if (!username || !password) {

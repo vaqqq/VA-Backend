@@ -11,6 +11,7 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
+const companyRouter = require('./routes/company');
 
 mongoose.connect(process.env.MONGODBURI)
   .then(() => console.log('Connected to MongoDB'))
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/register', registerRouter);
 app.use('/api/login', loginRouter);
+app.use('/api/register-company', companyRouter);
 
 app.use((req, res, next) => {
   if (req.hostname === 'max-va.vercel.app' && req.path === '/') {

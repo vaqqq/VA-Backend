@@ -3,7 +3,7 @@ const router = express.Router();
 const Company = require('../schemas/company');
 require('dotenv').config();
 
-router.post('/register-company', async (req, res) => {
+router.post('/', async (req, res) => {
     const { companyName, imageUrl, adminUsername, adminPassword } = req.body;
   
     if (!companyName || !imageUrl || !adminUsername || !adminPassword) {
