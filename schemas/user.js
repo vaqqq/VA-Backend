@@ -18,6 +18,13 @@ const CompanySchema = new mongoose.Schema({
     imageUrl: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     projects: [ProjectSchema],
+    employees: [
+        {
+            name: { type: String, required: true },
+            role: { type: String, default: 'employee' },
+            createdAt: { type: Date, default: Date.now },
+        },
+    ],
 });
 
 const UserSchema = new mongoose.Schema({
