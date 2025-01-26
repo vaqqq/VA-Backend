@@ -17,7 +17,7 @@ router.post('/:username/companies/:companyName/employees', async (req, res) => {
         return res.status(404).json({ success: false, message: 'Firma nicht gefunden.' });
       }
   
-      company.employees.push({ name, role: 'employee' });
+      company.employees.push({ name, password, role: 'employee' });
       await user.save();
   
       res.status(201).json({ success: true, message: 'Mitarbeiter erfolgreich hinzugefügt.' });
