@@ -6,35 +6,49 @@ router.post('/', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).send({ error: 'Username and password are required' });
+    return res
+      .status(400)
+      .json({ success: false, message: 'Username and password are required' });
   }
 
   try {
-    const user = await User.findOne({ username });
+    const users = await User.find();
 
-    if (user && user.password === password) {
-      return res.status(200).send({
+    const mainUser = users.find((user) => user.username === username && user.password === password);
+
+    if (mainUser) {
+      return res.status(200).json({
+        success: true,
         message: 'Login successful as main user',
         role: 'admin',
-        user,
+        user: mainUser,
       });
     }
 
-    const matchedEmployee = user?.companies.flatMap((company) => company.employees)
-      .find((employee) => employee.name === username && employee.password === password);
+    for (const user of users) {
+      for (const company of user.companies) {
+        const employee = company.employees.find(
+          (emp) => emp.name === username && emp.password === password
+        );
 
-    if (matchedEmployee) {
-      return res.status(200).send({
-        message: 'Login successful as employee',
-        role: matchedEmployee.role || 'employee',
-        employee: matchedEmployee,
-      });
+        if (employee) {
+          return res.status(200).json({
+            success: true,
+            message: 'Login successful as employee',
+            role: employee.role || 'employee',
+            employee,
+            company: company.companyName,
+          });
+        }
+      }
     }
 
-    return res.status(401).send({ error: 'Invalid username or password' });
+    return res
+      .status(401)
+      .json({ success: false, message: 'Invalid username or password' });
   } catch (error) {
     console.error('Error logging in:', error);
-    res.status(500).send({ error: 'Internal server error' });
+    return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
