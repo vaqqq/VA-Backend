@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../schemas/user');
 
-router.post('/users/:username/companies/:companyName/employees', async (req, res) => {
+router.post('/', async (req, res) => {
     const { username, companyName } = req.params;
     const { name, password } = req.body;
   
