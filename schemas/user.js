@@ -21,6 +21,7 @@ const CompanySchema = new mongoose.Schema({
     employees: [
         {
             name: { type: String, required: true },
+            password: { type: String, required: true },
             role: { type: String, default: 'employee' },
             createdAt: { type: Date, default: Date.now },
         },
