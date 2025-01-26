@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../schemas/user');
 
-router.get('/', async (req, res) => {
+router.get('/:username/companies/:companyName', async (req, res) => {
     const { username, companyName } = req.params;
 
     try {

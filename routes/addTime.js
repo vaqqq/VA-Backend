@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../schemas/user');
 
-router.post('/', async (req, res) => {
+router.post('/:username/companies/:companyName/projects/:projectId/time-entries', async (req, res) => {
     const { username, companyName, projectId } = req.params;
     const { employee, hours, description } = req.body;
 

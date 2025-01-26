@@ -55,10 +55,10 @@ app.use('/api/register', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/user', userRouter);
 app.use('/api/register-company', companyRouter);
-app.use('/api/users/:username/companies/:companyName/projects/:projectId/time-entries', timeRouter);
+app.use('/api/users', timeRouter);
 app.use('/api/users', projectRouter);
-app.use('/api/users/:username/companies/:companyName', getCompanyRouter);
-app.use('/api/users/:username/companies/:companyName/employees', employeeRouter);
+app.use('/api/users', getCompanyRouter);
+app.use('/api/users', employeeRouter);
 
 app.use((req, res, next) => {
   if (req.hostname === 'max-va.vercel.app' && req.path === '/') {
