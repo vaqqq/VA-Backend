@@ -56,7 +56,7 @@ app.use('/api/login', loginRouter);
 app.use('/api/user', userRouter);
 app.use('/api/register-company', companyRouter);
 app.use('/api/users/:username/companies/:companyName/projects/:projectId/time-entries', timeRouter);
-app.use('/api/users/:username/companies/:companyName/projects', projectRouter);
+app.use('/api/users', projectRouter);
 app.use('/api/users/:username/companies/:companyName', getCompanyRouter);
 app.use('/api/users/:username/companies/:companyName/employees', employeeRouter);
 
