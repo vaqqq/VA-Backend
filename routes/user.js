@@ -32,7 +32,7 @@ router.get('/:username', async (req, res) => {
             })),
         });
     } catch (error) {
-        res.status(500).send({ error: 'Internal server error.' });
+        res.status(500).send({ error: 'Interner server error.' });
     }
 });
 
