@@ -15,6 +15,7 @@ const companyRouter = require('./routes/register-company');
 const userRouter = require('./routes/user');
 const timeRouter = require('./routes/addTime');
 const projectRouter = require('./routes/addProject');
+const getProjectRouter = require('./routes/getProject');
 const getCompanyRouter = require('./routes/getCompany');
 const employeeRouter = require('./routes/addEmployee');
 
@@ -57,6 +58,7 @@ app.use('/api/user', userRouter);
 app.use('/api/register-company', companyRouter);
 app.use('/api/users', timeRouter);
 app.use('/api/users', projectRouter);
+app.use('/api/users', getProjectRouter);
 app.use('/api/users', getCompanyRouter);
 app.use('/api/users', employeeRouter);
 
