@@ -13,6 +13,10 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const companyRouter = require('./routes/register-company');
 const userRouter = require('./routes/user');
+const timeRouter = require('./routes/addTime');
+const projectRouter = require('./routes/addProject');
+const getCompanyRouter = require('./routes/getCompany');
+const employeeRouter = require('./routes/addEmployee');
 
 mongoose.connect(process.env.MONGODBURI)
   .then(() => console.log('Connected to MongoDB'))
@@ -51,6 +55,10 @@ app.use('/api/register', registerRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/user', userRouter);
 app.use('/api/register-company', companyRouter);
+app.use('/api/users/:username/companies/:companyName/projects/:projectId/time-entries', timeRouter);
+app.use('/api/users/:username/companies/:companyName/projects', projectRouter);
+app.use('/api/users/:username/companies/:companyName', getCompanyRouter);
+app.use('/api/users/:username/companies/:companyName/employees', employeeRouter);
 
 app.use((req, res, next) => {
   if (req.hostname === 'max-va.vercel.app' && req.path === '/') {
