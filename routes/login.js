@@ -12,19 +12,23 @@ router.post('/', async (req, res) => {
   try {
     const user = await User.findOne({ username });
 
-    if (user) {
-      if (user.password === password) {
-        return res.status(200).send({ message: 'Login successful as main user', role: 'admin', user });
-      }
+    if (user && user.password === password) {
+      return res.status(200).send({
+        message: 'Login successful as main user',
+        role: 'admin',
+        user,
+      });
+    }
 
-      for (const company of user.companies) {
-        const employee = company.employees.find(
-          (emp) => emp.name === username && emp.password === password
-        );
-        if (employee) {
-          return res.status(200).send({ message: 'Login successful as employee', role: employee.role, employee });
-        }
-      }
+    const matchedEmployee = user?.companies.flatMap((company) => company.employees)
+      .find((employee) => employee.name === username && employee.password === password);
+
+    if (matchedEmployee) {
+      return res.status(200).send({
+        message: 'Login successful as employee',
+        role: matchedEmployee.role || 'employee',
+        employee: matchedEmployee,
+      });
     }
 
     return res.status(401).send({ error: 'Invalid username or password' });
