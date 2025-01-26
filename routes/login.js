@@ -3,24 +3,35 @@ var router = express.Router();
 const User = require('../schemas/user');
 
 router.post('/', async (req, res) => {
-    const { username, password } = req.body;
-  
-    if (!username || !password) {
-      return res.status(400).send({ error: 'Username and password are required' });
-    }
-  
-    try {
-      const user = await User.findOne({ username, password });
-  
-      if (!user) {
-        return res.status(401).send({ error: 'Invalid username or password' });
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).send({ error: 'Username and password are required' });
+  }
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (user) {
+      if (user.password === password) {
+        return res.status(200).send({ message: 'Login successful as main user', role: 'admin', user });
       }
-  
-      res.status(200).send({ message: 'Login successful' });
-    } catch (error) {
-      console.error('Error logging in:', error);
-      res.status(500).send({ error: 'Internal server error' });
+
+      for (const company of user.companies) {
+        const employee = company.employees.find(
+          (emp) => emp.name === username && emp.password === password
+        );
+        if (employee) {
+          return res.status(200).send({ message: 'Login successful as employee', role: employee.role, employee });
+        }
+      }
     }
-  });
+
+    return res.status(401).send({ error: 'Invalid username or password' });
+  } catch (error) {
+    console.error('Error logging in:', error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+});
 
 module.exports = router;
